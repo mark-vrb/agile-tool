@@ -1,0 +1,38 @@
+<!doctype html>
+<!--
+  ams.html
+  ams browser document
+-->
+
+<html>
+<head>
+  <!-- ie9+ rendering support for latest standards -->
+  <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+  <title>Agile Management System</title>
+
+  <!-- third-party stylesheets -->
+
+  <!-- our stylesheets -->
+  <link rel="stylesheet" href="css/ams.css"       type="text/css"/>
+  <link rel="stylesheet" href="css/ams.shell.css" type="text/css"/>
+  <link rel="stylesheet" href="css/ams.board.css" type="text/css"/>
+
+  <!-- third-party javascript -->
+  <script src="js/jq/jquery.js"></script>
+
+  <!-- our javascript -->
+  <script src="js/ams.js"            ></script>
+  <script src="js/ams.shell.js"      ></script>
+  <script src="js/ams.toolbar.js"    ></script>
+  <script src="js/ams.board.js"      ></script>
+  <script src="js/ams.board.story.js"></script>
+  <script>
+    $(function () { ams.initModule($('#ams')); });
+  </script>
+</head>
+<body>
+  <div id="ams"></div>
+</body>
+</html>

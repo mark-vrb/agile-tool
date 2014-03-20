@@ -123,7 +123,6 @@ CREATE TABLE `story_comments` (
   `strc_text` text NOT NULL,
   `strc_usr_id` int(11) NOT NULL,
   `strc_created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `strc_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`strc_id`),
   UNIQUE KEY `strc_id_UNIQUE` (`strc_id`),
   KEY `fk_strc_str_id_idx` (`strc_str_id`),
@@ -154,6 +153,8 @@ CREATE TABLE `story_steps` (
   `strs_str_id` int(11) NOT NULL,
   `strs_description` varchar(300) NOT NULL,
   `strs_completed` bit(1) NOT NULL DEFAULT b'0',
+  `strs_completed_date` datetime DEFAULT NULL,
+  `strs_sequence_pos` int(11) NOT NULL,
   PRIMARY KEY (`strs_id`),
   UNIQUE KEY `strs_id_UNIQUE` (`strs_id`),
   KEY `fk_strs_str_id_idx` (`strs_str_id`),
@@ -238,6 +239,7 @@ CREATE TABLE `workflow_stages` (
   `wfst_description` varchar(45) NOT NULL DEFAULT '',
   `wfst_type` tinyint(4) NOT NULL DEFAULT '0',
   `wfst_parent` int(11) DEFAULT NULL,
+  `wfst_sequence_pos` int(11) NOT NULL,
   PRIMARY KEY (`wfst_id`),
   UNIQUE KEY `wfst_id_UNIQUE` (`wfst_id`),
   KEY `fk_wfst_wf_id_idx` (`wfst_wf_id`),
@@ -251,7 +253,7 @@ CREATE TABLE `workflow_stages` (
 
 LOCK TABLES `workflow_stages` WRITE;
 /*!40000 ALTER TABLE `workflow_stages` DISABLE KEYS */;
-INSERT INTO `workflow_stages` VALUES (1,1,'Backlog','',2,NULL),(2,1,'Development','',0,NULL),(3,1,'QA','',0,NULL),(4,1,'Deployment','',0,NULL),(5,1,'In progress','',1,2),(6,1,'In progress','',1,3),(7,1,'In progress','',1,4),(8,1,'Ready','',2,2),(9,1,'Ready','',2,3),(10,1,'Ready','',2,4),(11,1,'Implemented','',2,NULL);
+INSERT INTO `workflow_stages` VALUES (1,1,'Backlog','',2,NULL,0),(2,1,'Development','',0,NULL,0),(3,1,'QA','',0,NULL,0),(4,1,'Deployment','',0,NULL,0),(5,1,'In progress','',1,2,0),(6,1,'In progress','',1,3,0),(7,1,'In progress','',1,4,0),(8,1,'Ready','',2,2,0),(9,1,'Ready','',2,3,0),(10,1,'Ready','',2,4,0),(11,1,'Implemented','',2,NULL,0);
 /*!40000 ALTER TABLE `workflow_stages` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -293,4 +295,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-03-14  0:59:49
+-- Dump completed on 2014-03-20  8:42:49

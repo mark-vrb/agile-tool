@@ -1,0 +1,55 @@
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:300,400,700);
+
+body {
+  margin : 0;
+  padding: 0;
+  font-family : 'Open Sans', sans-serif;
+  font-weight : 400;
+}
+
+h1 {
+  font-weight : 300;
+}
+
+.m-button {
+  font-weight: 300;
+  width          : 100px;
+  height         : 30px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #86227B;
+  color:  #86227B;
+  background     : white;
+  text-align     : center;
+  display        : table-cell;
+  vertical-align : middle;
+}
+
+.m-button:hover {
+  animation-name            : m-button-in;
+  animation-duration        : 0.4s;
+  /*animation-timing-funsction : ease;*/
+  /*width                     : 105px;*/
+  background                : #86227B;
+  color:  white;
+  cursor: pointer;
+}
+
+  @keyframes m-button-in {
+    from {
+      /*width      : 100px;*/
+      background : white;
+      color:  #86227B;
+    }
+    to {
+      /*width      : 105px;*/
+      background : #86227B;
+      color:  white;
+    }
+  }
+
+.m-test {
+  height: 40px;
+  width: 200px;
+  background: black;
+}
