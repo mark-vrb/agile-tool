@@ -1,0 +1,25 @@
+{
+  "name": "agile-tool",
+  "version": "1.0.0",
+  "authors": [
+    "Mark Vorobyov <vorobyovmark@gmail.com>"
+  ],
+  "description": "Agile management system",
+  "main": "server.js",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "latest",
+    "font-awesome": "latest",
+    "animate.css": "latest",
+    "angular": "latest",
+    "angular-route": "latest" 
+  }
+}
