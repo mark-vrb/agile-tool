@@ -9,6 +9,9 @@ angular
         .when('/board', {
           templateUrl : 'views/board.html',
           controller : 'BoardController'
+        })
+        .otherwise({
+          redirectTo: '/'
         });
 
       $locationProvider.html5Mode(true);
