@@ -7,6 +7,30 @@ module.exports = function(app, connection) {
     });
   });
 
+  // temporary section, mocked login, will be moved
+  app.post('/api/login', function(req, res) {
+    res.json({
+      email     : "vorobyovmark@gmail.com",
+      firstName : "Mark",
+      lastName  : "Vorobyov",
+      token     : "asdf1234asdf1234"
+    });
+  });
+  
+  app.post('/api/signup', function(req, res) {
+    res.json({
+      email     : "vorobyovmark@gmail.com",
+      firstName : "Mark",
+      lastName  : "Vorobyov",
+      token     : "asdf1234asdf1234"
+    });
+  });
+
+  app.post('/api/logout', function(req, res) {
+    res.send();
+  });
+  // end of temporary section
+
   app.get('*', function(req, res) {
     res.sendfile('./public/views/index.html');
   });
