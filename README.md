@@ -3,6 +3,8 @@ agile-tool
 
 Agile Management System
 
+A [Sails](http://sailsjs.org) application.
+
 Installation
 ------------
 You need to have installed node.js and npm (included in node.js installer).
