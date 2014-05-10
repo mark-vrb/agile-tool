@@ -1,12 +1,14 @@
 agile-tool
 ==========
 
-Agile Management System
+Agile Management System. A [Sails](http://sailsjs.org) application.
 
-A [Sails](http://sailsjs.org) application.
+Database setup
+--------------
+TODO : add section
 
-Installation
-------------
+Application setup
+-----------------
 You need to have installed node.js and npm (included in node.js installer).
 Clone repository and in repository root folder execute following commands. First of all, install node packages.
 ```
@@ -18,6 +20,6 @@ bower install
 ```
 And finally, launch the server.
 ```
-node server.js
+node app.js
 ```
-Thats it! Application is now available on [localhost:8080](http://localhost:8080)
+Thats it! Application is now available on [localhost:1337](http://localhost:1337)
