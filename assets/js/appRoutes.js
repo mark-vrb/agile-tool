@@ -6,7 +6,7 @@ angular
           templateUrl : 'views/main.html',
           controller : 'MainController'
         })
-        .when('/board', {
+        .when('/board/:id', {
           templateUrl : 'views/board.html',
           controller : 'BoardController'
         })
