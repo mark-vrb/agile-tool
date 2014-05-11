@@ -7,15 +7,21 @@
 
   <!-- CSS -->
   <link rel="stylesheet" href="libs/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="styles/index.css">
 
   <!-- JS -->
   <script src="libs/angular/angular.min.js"></script>
   <script src="libs/angular-route/angular-route.min.js"></script>
   <script src="libs/angular-cookies/angular-cookies.min.js"></script>
 
+  <script src="libs/jquery/dist/jquery.min.js"></script>
+  <script src="libs/bootstrap/dist/js/bootstrap.min.js"></script>
+
   <!-- ANGULAR CUSTOM -->
+  <script src="js/controllers/NavbarCtrl.js"></script>
   <script src="js/controllers/MainCtrl.js"></script>
   <script src="js/controllers/BoardCtrl.js"></script>
+  <script src="js/controllers/AuthCtrl.js"></script>
   <script src="js/services/UserService.js"></script>
   <script src="js/services/BoardService.js"></script>
   <script src="js/appRoutes.js"></script>
@@ -23,14 +29,36 @@
 </head>
 <body>
 
-  <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+  <nav class="navbar navbar-default navbar-fixed-top" role="navigation" ng-controller="NavbarController">
     <div class="container">
       <div class="navbar-header">
         <a class="navbar-brand" href="/">Agile-tool</a>
       </div>
       <ul class="nav navbar-nav">
-        <li><a href="/board">Board</a></li>
+        <li><a href="/board"><span class="glyphicon glyphicon-th-large"></span>  Board</a></li>
       </ul>
+
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown" ng-if="isAuthenticated()">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <img src="{{getAvatar()}}" alt="img" class="img-circle ams-navbar-avatar">
+            {{getFullName()}} <b class="caret"></b>
+          </a>
+          <ul class="dropdown-menu">
+            <li><a href="#"><span class="glyphicon glyphicon-user"></span> View profile</a></li>
+            <li><a href="#"><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
+            <li class="divider"></li>
+            <li><a href="#" ng-click="logout()">
+              <span class="glyphicon glyphicon-log-out"></span> Logout
+            </a></li>
+          </ul>
+        </li>
+      </ul>
+
+      <button type="button" class="btn btn-default navbar-btn navbar-right"
+              ng-if="!isAuthenticated()" ng-click="goToAuthPage()">
+        <span class="glyphicon glyphicon-log-in"></span> Enter
+      </button>
     </div>
   </nav>
 

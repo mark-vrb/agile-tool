@@ -6,6 +6,9 @@
  */
 
 module.exports = {
+  getAuthenticated : function(req, res) {
+    res.json(req.user[0]);
+  },
 	
 };
 

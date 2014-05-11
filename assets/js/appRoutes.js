@@ -10,6 +10,10 @@ angular
           templateUrl : 'views/board.html',
           controller : 'BoardController'
         })
+        .when('/auth', {
+          templateUrl : 'views/auth.html',
+          controller : 'AuthController'
+        })
         .otherwise({
           redirectTo: '/'
         });

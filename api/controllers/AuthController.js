@@ -19,7 +19,7 @@ module.exports = {
       }
       req.logIn(user, function(err) {
         if (err) res.badRequest('Wrong email or password');
-        return res.send('Login succeed');
+        return res.json(req.user[0]);
       });
     })(req, res);
   },

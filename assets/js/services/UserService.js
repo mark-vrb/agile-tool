@@ -1,67 +1,59 @@
-angular.module('UserService', []).factory('User', ['$http', '$cookies', function($http, $cookies) {
+angular.module('UserService', []).factory('User', ['$http', function($http) {
   var
     user,
-    saveUserData, deleteUserData, fillUserData,
-    login, logout, signup, 
-    getEmail, getFirstName, getLastName, getToken
+    getCurrent, login, signup, logout
   ;
 
-  // private methods
-  saveUserData = function(userData) {
-    $cookies.user = user = userData;
+  $http.get('/api/user/getAuthenticated').success(function(data) {
+    user = data;
+  });
+
+  getCurrent = function () {
+    return user ? angular.copy(user) : null;
   };
 
-  deleteUserData = function() {
-    $cookies.user = user = null;
-  };
-
-  fillUserData = function() {
-    user = $cookies.user;
-  };
-
-  // public methods
-  login = function (loginUserObject) {
-    $http.post('/api/login', loginUserObject)
-      .success(function(data) {
-        saveUserData(data);
+  login = function (userData, callback) {
+    $http
+      .post('api/auth/login', {
+        username : userData.email, 
+        password : userData.password
+      })
+      .success(function (data) {
+        user = data;
+        callback(null, user);
+      })
+      .error(function (data) {
+        callback(data, null)
       });
   };
 
-  signup = function (newUserObject) {
-    $http.post('/api/signup', newUserObject)
-      .success(function(data) {
-        saveUserData(data);
+  signup = function (userData, callback) {
+    $http
+      .post('api/user', userData)
+      .success(function (data) {
+        login(userData, callback);
+      })
+      .error(function (data) {
+        callback(data, null);
       });
   };
 
-  logout = function () {
-    $http.post('/api/logout', {token: token})
-      .success(function() {
-        deleteUserData();
+  logout = function (callback) {
+    $http
+      .get('api/auth/logout')
+      .success(function () {
+        user = null;
+        callback(null);
+      })
+      .error(function (data) {
+        callback(data);
       });
   };
 
-  getEmail = function () {
-    if (user) return user.email;
-  };
-  getFirstName = function () {
-    if (user) return user.firstName;
-  };
-  getLastName = function () {
-    if (user) return user.lastName;
-  };
-  getToken = function () {
-    if (user) return user.token;
-  };
-
-  // forming return object
   return {
-    login        : login,
-    signup       : signup,
-    logout       : logout,
-    getEmail     : getEmail,
-    getToken     : getToken,
-    getFirstName : getFirstName,
-    getLastName  : getLastName
+    getCurrent : getCurrent,
+    login      : login,
+    signup     : signup,
+    logout     : logout
   };
 }]);

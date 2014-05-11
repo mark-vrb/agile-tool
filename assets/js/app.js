@@ -1,1 +1,6 @@
-angular.module('agileToolApp', ['ngRoute', 'appRoutes', 'MainCtrl', 'BoardCtrl', 'BoardService', 'UserService']);
+angular.module('agileToolApp', 
+  [
+    'ngRoute', 'appRoutes',
+    'NavbarCtrl','MainCtrl', 'BoardCtrl', 'AuthCtrl',
+    'BoardService', 'UserService'
+  ]);
