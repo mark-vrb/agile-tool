@@ -1,5 +1,14 @@
+html {
+  height: 100%;
+}
+
 body {
   padding-top : 50px;
+  height: 100%;
+}
+
+.ams-view-container {
+  height: 100%;
 }
 
 .ams-navbar-avatar {

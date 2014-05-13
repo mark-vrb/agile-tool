@@ -11,9 +11,8 @@ module.exports = {
       type: 'string',
       required : true
     },
-    type : {
-      type : 'string',
-      required : true
+    stageType : {
+      type : 'string'
     },
     sequenceNo : {
       type : 'integer',

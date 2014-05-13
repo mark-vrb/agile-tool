@@ -1,3 +1,18 @@
-<div class="jumbotron text-center">
-	<h1>{{ tagline }}</h1>
+<div class="ams-board">
+	<div class="ams-board-header">
+    <h2>{{ board.name }} <small>{{ board.description }}</small></h2>
+  </div>
+  <div class="ams-board-stages">
+    <div ng-repeat="stage in board.stages" class="ams-board-stage">
+      <div class="ams-board-stage-header">
+        <span>{{ stage.name }}</span>
+        <button type="button" class="btn btn-default btn-xs pull-right">
+          <span class="glyphicon glyphicon-plus"></span>
+        </button>
+      </div>
+      <div>
+        <!-- stories -->
+      </div>
+    </div>
+  </div>
 </div>

@@ -1,0 +1,34 @@
+.ams-board {
+  margin-left  : 20px;
+  margin-right : 20px;
+  height       : 100%;
+}
+
+.ams-board-header {
+  position      : fixed;
+  border-bottom : 1px solid #e1e1e8;
+}
+
+.ams-board-stages {
+  width       : 100%;
+  height      : 100%;
+  overflow    : auto;
+  white-space : nowrap;
+  padding-top : 80px;
+}
+
+.ams-board-stage {
+  background    : #f7f7f9;
+  border        : 1px solid #e1e1e8;
+  border-radius : 4px;
+  height        : 100%;
+  width         : 300px;
+  margin-right  : 5px;
+  display       : inline-block; 
+}
+
+.ams-board-stage-header {
+  font-size: 18px;
+  padding: 10px;
+  border-bottom: 1px solid #e1e1e8;
+}

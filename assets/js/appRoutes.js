@@ -7,7 +7,7 @@ angular
           controller : 'MainController'
         })
         .when('/board/:id', {
-          templateUrl : 'views/board.html',
+          templateUrl : '../views/board.html',
           controller : 'BoardController'
         })
         .when('/auth', {

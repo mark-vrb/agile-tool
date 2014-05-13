@@ -15,7 +15,7 @@ passport.deserializeUser(function(id, done) {
 
 passport.use(new LocalStrategy(
   function(email, password, done) {
-    User.findByEmail(email).done(function(err, user) {
+    User.findByEmail(email, function(err, user) {
       if (err) { return done(null, err); }
       if (!user || user.length < 1) { return done(null, false, { message: 'Incorrect User'}); }
       bcrypt.compare(password, user[0].password, function(err, res) {
