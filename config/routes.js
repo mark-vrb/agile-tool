@@ -33,6 +33,21 @@ module.exports.routes = {
   //   view : 'assets/views/index.html'
   // },
 
+  'get /api/board/:id/expanded' : {
+    controller : 'BoardController',
+    action     : 'expanded'
+  },
+
+  'post /api/story/:id/like' : {
+    controller : 'StoryController',
+    action     : 'like'
+  },
+
+  'post /api/story/:id/unlike' : {
+    controller : 'StoryController',
+    action     : 'unlike'
+  },
+
   // If a request to a URL doesn't match any of the custom routes above,
   // it is matched against Sails route blueprints.  See `config/blueprints.js`
   // for configuration options and examples.

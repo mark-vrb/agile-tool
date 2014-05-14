@@ -5,7 +5,7 @@ angular.module('BoardService', []).factory('Board', ['$http', function($http) {
 
   getBoard = function (id, callback) {
     $http
-      .get('/api/board/' + id)
+      .get('/api/board/' + id + '/expanded')
       .success(function (data) {
         callback(null, data);
       })

@@ -1,18 +1,122 @@
 <div class="ams-board">
+
 	<div class="ams-board-header">
     <h2>{{ board.name }} <small>{{ board.description }}</small></h2>
   </div>
+
   <div class="ams-board-stages">
-    <div ng-repeat="stage in board.stages" class="ams-board-stage">
+    <!-- Display all board stages -->
+    <div class="ams-board-stage" ng-repeat="stage in board.stages">
+      
       <div class="ams-board-stage-header">
         <span>{{ stage.name }}</span>
-        <button type="button" class="btn btn-default btn-xs pull-right">
+        <button type="button" class="btn btn-default btn-xs pull-right" ng-click="viewCreateStoryModal(stage.id)">
           <span class="glyphicon glyphicon-plus"></span>
         </button>
       </div>
-      <div>
-        <!-- stories -->
+
+      <div class="ams-board-stage-stories">
+        <!-- Display all stage stories -->
+        <div class="ams-board-story" ng-repeat="story in stage.stories">
+
+          <div class="ams-board-story-header">
+            <span class="ams-board-story-header-text">{{ story.id }}</span>
+            <div class="pull-right" ng-repeat="user in story.assignedTo">
+              <img src="{{ user.avatar }}" alt="img" class="img-circle ams-board-story-assignee-avatar">
+            </div>
+            <button type="button" class="btn btn-default btn-sm pull-right">
+              + <span class="glyphicon glyphicon-user"></span>
+            </button>
+          </div>
+
+          <div class="ams-board-story-body" ng-click="viewStory(story)">
+            <p>{{ story.name }}</p>
+          </div>
+
+          <div class="ams-board-story-footer clearfix">
+            <div class="pull-left">{{ story.points }} SP</div>
+
+            <div class="btn-group btn-group-sm pull-right">
+            <button type="button" class="btn btn-default" ng-click="likeStoryClick(story)" ng-class="{active: storyLikedByUser(story)}">
+              {{ story.likes.length }} <span class="glyphicon glyphicon-heart"></span>
+            </button>
+            <button type="button" class="btn btn-default" ng-click="deleteStory(story.id)">
+              <span class="glyphicon glyphicon-trash"></span>
+            </button>
+            <button type="button" class="btn btn-default" ng-click="viewEditStoryModal(story.id)">
+              <span class="glyphicon glyphicon-pencil"></span>
+            </button>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Create/Edit Story Modal -->
+  <div class="modal fade" id="editStoryModal" tabindex="-1" role="dialog" aria-labelledby="editStoryLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title" id="editStoryLabel">
+            <span ng-if="storyCreateMode">Create new story</span>
+            <span ng-if="storyEditMode">Edit Story #{{ story.id }}</span>
+          </h4>
+        </div>
+
+        <div class="modal-body">
+          <form name="storyForm" novalidate>
+            <div class="form-group">
+              <label for="storyNameInput">Name</label>
+              <input type="text" class="form-control" id="storyNameInput" placeholder="Enter name" ng-model="story.name" required>
+            </div>
+            <div class="form-group">
+              <label for="storyDescInput">Description</label>
+              <input type="text" class="form-control" id="storyDescInput" placeholder="Enter description" ng-model="story.description">
+            </div>
+            <div class="form-group">
+              <label for="storyPointsInput">Story Points</label>
+              <input type="text" class="form-control" id="storyPointsInput" placeholder="Enter story point estimation" ng-model="story.points" required>
+            </div>
+          </form>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" ng-click="cancelCreation()">Cancel</button>
+          <button type="button" class="btn btn-primary" ng-disabled="storyForm.$invalid" ng-click="createStory()" ng-if="storyCreateMode">Create</button>
+          <button type="button" class="btn btn-primary" ng-disabled="storyForm.$invalid" ng-click="updateStory()" ng-if="storyEditMode">Save</button>
+        </div>
       </div>
     </div>
   </div>
+
+  <!-- View Story Modal -->
+  <div class="modal fade" id="viewStoryModal" tabindex="-1" role="dialog" aria-labelledby="viewStoryModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title" id="viewStoryModalLabel">View story #{{ story.id }}</h4>
+        </div>
+        <div class="modal-body">
+          <dl class="dl-horizontal">
+            <dt>Name</dt>
+            <dd>{{ story.name }}</dd>
+            <dt>Description</dt>
+            <dd>{{ story.description }}</dd>
+            <dt>Story Points</dt>
+            <dd>{{ story.points }}</dd>
+          </dl>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>

@@ -4,9 +4,14 @@ angular.module('UserService', []).factory('User', ['$http', function($http) {
     getCurrent, login, signup, logout
   ;
 
-  $http.get('/api/user/getAuthenticated').success(function(data) {
-    user = data;
-  });
+  $http.get('/api/user/getAuthenticated')
+    .success(function (data) {
+      user = data;
+    })
+    // ONLY FOR DEVELOPMENT! SHOULD BE REMOVED!
+    .error(function () {
+      login({email : 'vorobyovmark@gmail.com', password : '123456'});
+    });
 
   getCurrent = function () {
     return user ? angular.copy(user) : null;
