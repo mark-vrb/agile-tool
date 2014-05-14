@@ -21,12 +21,15 @@
 
           <div class="ams-board-story-header">
             <span class="ams-board-story-header-text">{{ story.id }}</span>
-            <div class="pull-right" ng-repeat="user in story.assignedTo">
-              <img src="{{ user.avatar }}" alt="img" class="img-circle ams-board-story-assignee-avatar">
+            <div class="btn-group btn-group-sm pull-right">
+              <button type="button" class="btn btn-default" ng-disabled="isFirstColumn(stage)" ng-click="toPreviousColumn(story)">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+              </button>
+              <button type="button" class="btn btn-default" ng-disabled="isLastColumn(stage)" ng-click="toNextColumn(story)">
+                <span class="glyphicon glyphicon-chevron-right"></span>
+              </button>
             </div>
-            <button type="button" class="btn btn-default btn-sm pull-right">
-              + <span class="glyphicon glyphicon-user"></span>
-            </button>
+
           </div>
 
           <div class="ams-board-story-body" ng-click="viewStory(story)">
@@ -34,7 +37,7 @@
           </div>
 
           <div class="ams-board-story-footer clearfix">
-            <div class="pull-left">{{ story.points }} SP</div>
+            <div class="ams-board-story-footer-text pull-left">{{ story.points }} SP</div>
 
             <div class="btn-group btn-group-sm pull-right">
             <button type="button" class="btn btn-default" ng-click="likeStoryClick(story)" ng-class="{active: storyLikedByUser(story)}">
@@ -76,13 +79,35 @@
             </div>
             <div class="form-group">
               <label for="storyDescInput">Description</label>
-              <input type="text" class="form-control" id="storyDescInput" placeholder="Enter description" ng-model="story.description">
+              <textarea class="form-control" id="storyDescInput" rows="3" placeholder="Enter description" ng-model="story.description"></textarea>
             </div>
             <div class="form-group">
               <label for="storyPointsInput">Story Points</label>
               <input type="text" class="form-control" id="storyPointsInput" placeholder="Enter story point estimation" ng-model="story.points" required>
             </div>
+            <div class="form-group">
+              <label for="storyTaskInput">Tasks</label>
+              <div class="input-group">
+                <input type="text" class="form-control" id="storyTaskInput" placeholder="Enter task" ng-model="tasks.enteredText">
+                <span class="input-group-btn">
+                  <button class="btn btn-default" type="button" ng-click="addTaskClick()" ng-disabled="!tasks.enteredText">Add</button>
+                </span>
+              </div>
+              <ul class="list-group ams-story-popup">
+                <li class="list-group-item" ng-repeat="task in tasks.collection">
+                  <span ng-class="{ams-story-completed-task: task.done}">
+                    {{ task.description }}
+                  </span>                
+                  <div class="btn-group btn-group-xs pull-right">
+                    <button type="button" class="btn btn-danger" ng-click="deleteTaskClick(task)">
+                    <span class="glyphicon glyphicon-trash"></span>
+                  </button>
+                  </div>
+                </li>
+              </ul>
+            </div>
           </form>
+
         </div>
 
         <div class="modal-footer">
@@ -103,13 +128,19 @@
           <h4 class="modal-title" id="viewStoryModalLabel">View story #{{ story.id }}</h4>
         </div>
         <div class="modal-body">
-          <dl class="dl-horizontal">
+          <dl>
             <dt>Name</dt>
             <dd>{{ story.name }}</dd>
             <dt>Description</dt>
             <dd>{{ story.description }}</dd>
             <dt>Story Points</dt>
             <dd>{{ story.points }}</dd>
+            <dt>Asignees</dt>
+            <dd>
+              <div ng-repeat="user in story.assignedTo">
+                <img src="{{ user.avatar }}" alt="img" class="img-circle ams-board-story-assignee-avatar">
+              </div>
+            </dd>
           </dl>
         </div>
         <div class="modal-footer">

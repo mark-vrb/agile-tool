@@ -1,8 +1,9 @@
 angular.module('BoardCtrl', [])
 
-  .controller('BoardController', function ($rootScope, $scope, $routeParams, Board, User, Story) {
+  .controller('BoardController', function ($rootScope, $scope, $routeParams, Board, User, Story, Task) {
     $scope.board = {};
     $scope.errors = [];
+    $scope.tasks = {};
 
     $scope.refreshBoard = function () {
       Board.getBoard($routeParams.id, function (err, data) {
@@ -10,6 +11,9 @@ angular.module('BoardCtrl', [])
           $scope.errors.push(err);
           return;
         }
+        data.stages = data.stages.sort(function (a, b) {
+          return a.sequenceNo - b.sequenceNo;
+        });
         $scope.board = data;
       });
     };
@@ -21,6 +25,8 @@ angular.module('BoardCtrl', [])
 
     $scope.viewCreateStoryModal = function (stageId) {
       $scope.storyCreateMode = true;
+      $scope.storyEditMode = false;
+      $scope.tasks.collection = [];
       $scope.story = {};
       $scope.story.currentStage = stageId;
       $scope.story.createdBy = User.getCurrent().id;
@@ -31,6 +37,8 @@ angular.module('BoardCtrl', [])
       Story.getStory(storyId, function(err, data) {
         if (err) return;
         $scope.storyEditMode = true;
+        $scope.storyCreateMode = false;
+        $scope.tasks.collection = data.tasks;
         $scope.story = data;
         $('#editStoryModal').modal();
       });
@@ -41,6 +49,12 @@ angular.module('BoardCtrl', [])
         if (err) return;
         $scope.storyCreateMode = false;
         $scope.story = {};
+        $scope.tasks.collection.forEach(function (item) {
+          item.story = data.id;
+          Task.createTask(item, function (err, data) {
+            if (err) console.log(err);
+          });
+        });
         $('#editStoryModal').modal('hide');
         $scope.refreshBoard();
       });
@@ -87,6 +101,84 @@ angular.module('BoardCtrl', [])
           if (err) return;
           $scope.refreshBoard();
         });
+      }
+    };
+
+    $scope.isFirstColumn = function (stage) {
+      return $scope.board.stages.every(function (item) {
+        return item.sequenceNo >= stage.sequenceNo;
+      });
+    };
+
+    $scope.isLastColumn = function (stage) {
+      return $scope.board.stages.every(function (item) {
+        return item.sequenceNo <= stage.sequenceNo;
+      });
+    };
+
+    $scope.toNextColumn = function (story) {
+      var stageIndex = -1;
+      $scope.board.stages.forEach(function (item, index) {
+        if (item.id == story.currentStage) stageIndex = index;
+      });
+      story.currentStage = $scope.board.stages[stageIndex + 1].id;
+      Story.updateStory(story, function (err, data) {
+        if (err) { story.currentStage = stageIndex; return; }
+        $scope.refreshBoard();
+      });
+    };
+
+    $scope.toPreviousColumn = function (story) {
+      var stageIndex = -1;
+      $scope.board.stages.forEach(function (item, index) {
+        if (item.id == story.currentStage) stageIndex = index;
+      });
+      story.currentStage = $scope.board.stages[stageIndex - 1].id;
+      Story.updateStory(story, function (err, data) {
+        if (err) { story.currentStage = stageIndex; return; }
+        $scope.refreshBoard();
+      });
+    };
+
+    $scope.addTaskClick = function () {
+      if ($scope.storyEditMode) {
+        Task.createTask(
+          {
+            description : $scope.tasks.enteredText,
+            done : false,
+            story : $scope.story
+          },
+          function(err, data) {
+            if (err) return;
+            $scope.tasks.collection.push(data);
+          });
+        $scope.tasks.enteredText = null;
+      } else {
+        $scope.tasks.collection.push({
+          description : $scope.tasks.enteredText,
+          done : false,
+          story : $scope.story
+        });
+        $scope.tasks.enteredText = null;
+      }
+    };
+
+    $scope.deleteTaskClick = function (task) {
+      if ($scope.storyEditMode) {
+        Task.deleteTask(task.id, function (err, data) {
+          if (err) return;
+          var index = $scope.tasks.collection.indexOf(task);
+          if (index != -1)
+          {
+            $scope.tasks.collection.splice(index, 1);
+          }
+        });
+      } else {
+        var index = $scope.tasks.collection.indexOf(task);
+        if (index != -1)
+        {
+          $scope.tasks.collection.splice(index, 1);
+        }
       }
     };
 

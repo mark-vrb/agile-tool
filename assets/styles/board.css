@@ -32,7 +32,7 @@
 }
 
 .ams-board-stage-header {
-  font-size     : 18px;
+  font-size     : 20px;
   padding       : 10px;
   border-bottom : 1px solid #e1e1e8;
 }
@@ -67,7 +67,20 @@
 }
 
 .ams-board-story-body {
+  font-size  : 16px;
   max-height : 100px;
   overflow   : hidden;
   cursor     : pointer;
+}
+
+.ams-board-story-footer-text {
+  font-size : 18px;
+}
+
+.ams-story-popup {
+  margin-top : 10px;
+}
+
+.ams-story-completed-task {
+  text-decoration : line-through;
 }
