@@ -10,7 +10,7 @@ angular.module('UserService', []).factory('User', ['$http', function($http) {
     })
     // ONLY FOR DEVELOPMENT! SHOULD BE REMOVED!
     .error(function () {
-      login({email : 'vorobyovmark@gmail.com', password : '123456'},function(){});
+      // login({email : 'vorobyovmark@gmail.com', password : '123456'},function(){});
     });
 
   getCurrent = function () {
