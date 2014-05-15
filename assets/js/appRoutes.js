@@ -3,11 +3,11 @@ angular
     .config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
       $routeProvider
         .when('/', {
-          templateUrl : 'views/main.html',
+          templateUrl : '/views/main.html',
           controller : 'MainController'
         })
         .when('/board/create', {
-          templateUrl : '../views/boardEdit.html',
+          templateUrl : '/views/boardEdit.html',
           controller : 'BoardEditController'
         })
         .when('/board/:id/edit', {
@@ -15,11 +15,15 @@ angular
           controller : 'BoardEditController'
         })
         .when('/board/:id', {
-          templateUrl : '../views/board.html',
+          templateUrl : '/views/board.html',
           controller : 'BoardController'
         })
+        .when('/profile', {
+          templateUrl : '/views/profile.html',
+          controller : 'ProfileController'
+        })
         .when('/auth', {
-          templateUrl : 'views/auth.html',
+          templateUrl : '/views/auth.html',
           controller : 'AuthController'
         })
         .otherwise({

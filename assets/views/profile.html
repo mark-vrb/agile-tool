@@ -1,0 +1,20 @@
+<div class="container">
+  <div class="page-header">
+    <h2>
+      <img src="{{ user.avatar }}" class="img-circle" style="max-heigth : 80px">
+      {{ user.firstName + ' ' + user.lastName }} <small>User Profile #{{ user.id }}</small>
+    </h2>
+  </div>
+  <div>
+    <dl class="dl-horizontal">
+      <dt>First Name</dt>
+      <dd>{{ user.firstName }}</dd>
+      <dt>Last Name</dt>
+      <dd>{{ user.lastName }}</dd>
+      <dt>Email</dt>
+      <dd>{{ user.email }}</dd>
+      <dt ng-if="user.url">Url</dt>
+      <dd ng-if="user.url">{{ user.url }}</dd>
+    </dl>
+  </div>
+</div>

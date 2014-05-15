@@ -26,6 +26,7 @@
   <script src="js/controllers/BoardCtrl.js"></script>
   <script src="js/controllers/BoardEditCtrl.js"></script>
   <script src="js/controllers/AuthCtrl.js"></script>
+  <script src="js/controllers/ProfileCtrl.js"></script>
   <script src="js/services/UserService.js"></script>
   <script src="js/services/BoardService.js"></script>
   <script src="js/services/StoryService.js"></script>
@@ -61,12 +62,12 @@
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown" ng-if="isAuthenticated()">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-            <img src="{{getAvatar()}}" alt="img" class="img-circle ams-navbar-avatar">
+            <img src="{{getAvatar()}}" class="img-circle ams-navbar-avatar">
             {{getFullName()}} <b class="caret"></b>
           </a>
           <ul class="dropdown-menu">
-            <li><a href="#"><span class="glyphicon glyphicon-user"></span> View profile</a></li>
-            <li><a href="#"><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
+            <li><a href="/profile"><span class="glyphicon glyphicon-user"></span> View profile</a></li>
+            <!-- <li><a href="#"><span class="glyphicon glyphicon-cog"></span> Settings</a></li> -->
             <li class="divider"></li>
             <li><a href="#" ng-click="logout()">
               <span class="glyphicon glyphicon-log-out"></span> Logout
