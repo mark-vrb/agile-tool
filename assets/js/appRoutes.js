@@ -11,7 +11,7 @@ angular
           controller : 'BoardEditController'
         })
         .when('/board/:id/edit', {
-          templateUrl : '../views/boardEdit.html',
+          templateUrl : '/views/boardEdit.html',
           controller : 'BoardEditController'
         })
         .when('/board/:id', {

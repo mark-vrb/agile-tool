@@ -224,7 +224,7 @@ angular.module('BoardCtrl', [])
         },
         margins
       );
-    }
+    };
 
     $scope.refreshBoard();
 

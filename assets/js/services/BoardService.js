@@ -1,6 +1,6 @@
 angular.module('BoardService', []).factory('Board', ['$http', function($http) {
   var
-    getBoard, getAllBoards
+    getBoard, getAllBoards, createBoard, updateBoard
   ;
 
   getBoard = function (id, callback) {
@@ -28,8 +28,32 @@ angular.module('BoardService', []).factory('Board', ['$http', function($http) {
       });
   };
 
+  createBoard = function (board, callback) {
+    $http
+      .post('/api/board', board)
+      .success(function (data) {
+        callback(null, data);
+      })
+      .error(function (data) {
+        callback(data, null);
+      });
+  };
+
+  updateBoard = function (board, callback) {
+    $http
+      .put('/api/board/' + board.id, board)
+      .success(function (data) {
+        callback(null, data);
+      })
+      .error(function (data) {
+        callback(data, null);
+      });
+  };
+
   return {
     getBoard     : getBoard,
-    getAllBoards : getAllBoards
+    getAllBoards : getAllBoards,
+    createBoard  : createBoard,
+    updateBoard  : updateBoard
   };
 }]);

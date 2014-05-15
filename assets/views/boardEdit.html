@@ -1,0 +1,62 @@
+<div class="container">
+  <div class="page-header">
+    <h2 ng-if="editMode">Edit board #{{ board.id }} <small>{{ board.name }}</small></h2>
+    <h2 ng-if="!editMode">Create new board</h2>
+  </div>
+  <form role="form" name="boardForm" ng-submit="submitForm()" novalidate>
+    <div class="form-group">
+      <label for="inputBoardName">Board Name</label>
+      <input type="text" class="form-control" id="inputBoardName" placeholder="Enter name" ng-model="board.name" required>
+    </div>
+    <div class="form-group">
+      <label for="inputBoardDescription">Description</label>
+      <input type="text" class="form-control" id="inputBoardDescription" placeholder="Enter description" ng-model="board.description">
+    </div>
+    <div class="form-group">
+      <label for="selectTeam">Team</label>
+      <select class="form-control" id="selectTeam" ng-model="board.team">
+        <option ng-repeat="team in teams" value="{{ team.id }}">{{ team.name }}</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Stages</label>
+      <button type="button" class="btn btn-default" ng-click="addStageClick()">Add stage</button>
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Type</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="stage in board.stages">
+            <td>{{ stage.sequenceNo }}</td>
+            <td><input type="text" class="form-control" ng-model="stage.name"></td>
+            <td>
+              <select class="form-control" id="selectTeam" ng-model="stage.stageType">
+                <option value=""></option>
+                <option value="in progress">In progress</option>
+                <option value="waiting">Waiting</option>
+              </select>
+            </td>
+            <td>
+              <button type="button" class="btn btn-default" ng-click="stageUpClick(stage)" ng-disabled="$index == 0">
+                <span class="glyphicon glyphicon-chevron-up"></span> Up
+              </button>
+              <button type="button" class="btn btn-default" ng-click="stageDownClick(stage)" ng-disabled="$index == board.stages.length - 1">
+                <span class="glyphicon glyphicon-chevron-down"></span> Down
+              </button>
+              <button type="button" class="btn btn-default btn-danger" ng-click="deleteStageClick(stage)">
+                <span class="glyphicon glyphicon-trash"></span> Delete
+              </button>
+            </td>            
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <button type="submit" class="btn btn-default" ng-disabled="boardForm.$invalid">Submit</button>
+  </form>
+</div>

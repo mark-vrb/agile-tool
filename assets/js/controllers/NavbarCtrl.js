@@ -17,8 +17,11 @@ module.controller('NavbarController', function($rootScope, $scope, $location, Us
 
   $scope.logout = function () {
     User.logout(function (err) {
-      if (!err) 
+      if (!err)
+      {
         $location.url('/auth');
+        $scope.getBoards();
+      }
       else
         alert(err);
     });

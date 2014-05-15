@@ -10,7 +10,7 @@ angular.module('UserService', []).factory('User', ['$http', function($http) {
     })
     // ONLY FOR DEVELOPMENT! SHOULD BE REMOVED!
     .error(function () {
-      // login({email : 'vorobyovmark@gmail.com', password : '123456'});
+      login({email : 'vorobyovmark@gmail.com', password : '123456'},function(){});
     });
 
   getCurrent = function () {
@@ -19,7 +19,7 @@ angular.module('UserService', []).factory('User', ['$http', function($http) {
 
   login = function (userData, callback) {
     $http
-      .post('api/auth/login', {
+      .post('/api/auth/login', {
         username : userData.email, 
         password : userData.password
       })
@@ -34,7 +34,7 @@ angular.module('UserService', []).factory('User', ['$http', function($http) {
 
   signup = function (userData, callback) {
     $http
-      .post('api/user', userData)
+      .post('/api/user', userData)
       .success(function (data) {
         login(userData, callback);
       })
@@ -45,7 +45,7 @@ angular.module('UserService', []).factory('User', ['$http', function($http) {
 
   logout = function (callback) {
     $http
-      .get('api/auth/logout')
+      .get('/api/auth/logout')
       .success(function () {
         user = null;
         callback(null);
