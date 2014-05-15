@@ -77,6 +77,11 @@
   font-size : 18px;
 }
 
+.ams-board-story-progress {
+  font-size   : 14px;
+  margin-left : 20px;
+}
+
 .ams-story-popup {
   margin-top : 10px;
 }

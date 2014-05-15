@@ -1,6 +1,6 @@
 angular.module('TaskService', []).factory('Task', ['$http', function($http) {
   var
-    createTask, deleteTask
+    createTask, deleteTask, updateTask
   ;
 
   createTask = function (task, callback) {
@@ -23,10 +23,22 @@ angular.module('TaskService', []).factory('Task', ['$http', function($http) {
       .error(function (data) {
         callback(data, null);
       });
-  }
+  };
+
+  updateTask = function (task, callback) {
+    $http
+      .put('/api/task/' + task.id, task)
+      .success(function (data) {
+        callback(null, data);
+      })
+      .error(function (data) {
+        callback(data, null);
+      });
+  };
 
   return {
     createTask : createTask,
-    deleteTask : deleteTask
+    deleteTask : deleteTask,
+    updateTask : updateTask
   };
 }]);

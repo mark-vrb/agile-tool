@@ -1,7 +1,18 @@
-<div class="ams-board">
+<div class="ams-board" id="boardForPrint">
 
 	<div class="ams-board-header">
-    <h2>{{ board.name }} <small>{{ board.description }}</small></h2>
+    <h2>
+      <button type="button" class="btn btn-default btn-sm" ng-click="refreshBoard()">
+        <span class="glyphicon glyphicon-refresh"></span>
+      </button>
+      <a href="./edit" class="btn btn-default btn-sm" role="button">
+        <span class="glyphicon glyphicon-edit"></span>
+      </a>
+      <button type="button" class="btn btn-default btn-sm" ng-click="printPdf()">
+        <span class="glyphicon glyphicon-print"></span>
+      </button>
+      {{ board.name }} <small>{{ board.description }}</small>
+    </h2>
   </div>
 
   <div class="ams-board-stages">
@@ -20,7 +31,8 @@
         <div class="ams-board-story" ng-repeat="story in stage.stories">
 
           <div class="ams-board-story-header">
-            <span class="ams-board-story-header-text">{{ story.id }}</span>
+            <div class="ams-board-story-header-text pull-left">#{{ story.id }}</div>
+            <div class="ams-board-story-progress pull-left">Progress: {{ getProgress(story) }}</div>
             <div class="btn-group btn-group-sm pull-right">
               <button type="button" class="btn btn-default" ng-disabled="isFirstColumn(stage)" ng-click="toPreviousColumn(story)">
                 <span class="glyphicon glyphicon-chevron-left"></span>
@@ -32,13 +44,12 @@
 
           </div>
 
-          <div class="ams-board-story-body" ng-click="viewStory(story)">
+          <div class="ams-board-story-body" ng-click="viewStory(story.id)">
             <p>{{ story.name }}</p>
           </div>
 
           <div class="ams-board-story-footer clearfix">
             <div class="ams-board-story-footer-text pull-left">{{ story.points }} SP</div>
-
             <div class="btn-group btn-group-sm pull-right">
             <button type="button" class="btn btn-default" ng-click="likeStoryClick(story)" ng-class="{active: storyLikedByUser(story)}">
               {{ story.likes.length }} <span class="glyphicon glyphicon-heart"></span>
@@ -47,7 +58,7 @@
               <span class="glyphicon glyphicon-trash"></span>
             </button>
             <button type="button" class="btn btn-default" ng-click="viewEditStoryModal(story.id)">
-              <span class="glyphicon glyphicon-pencil"></span>
+              <span class="glyphicon glyphicon-edit"></span>
             </button>
             </div>
 
@@ -58,6 +69,7 @@
 
     </div>
   </div>
+</div>
 
   <!-- Create/Edit Story Modal -->
   <div class="modal fade" id="editStoryModal" tabindex="-1" role="dialog" aria-labelledby="editStoryLabel" aria-hidden="true">
@@ -95,7 +107,7 @@
               </div>
               <ul class="list-group ams-story-popup">
                 <li class="list-group-item" ng-repeat="task in tasks.collection">
-                  <span ng-class="{ams-story-completed-task: task.done}">
+                  <span ng-class="{'ams-story-completed-task': task.done}">
                     {{ task.description }}
                   </span>                
                   <div class="btn-group btn-group-xs pull-right">
@@ -141,6 +153,12 @@
                 <img src="{{ user.avatar }}" alt="img" class="img-circle ams-board-story-assignee-avatar">
               </div>
             </dd>
+            <dt>Tasks</dt>
+            <dd>
+              <div ng-repeat="task in story.tasks" ng-class="{'ams-story-completed-task':task.done}">
+                <input type="checkbox" ng-model="task.done" ng-click="completeTaskClick(task)"> {{ task.description }}<br>
+              </div>
+            </dd>
           </dl>
         </div>
         <div class="modal-footer">
@@ -149,5 +167,3 @@
       </div>
     </div>
   </div>
-
-</div>

@@ -18,10 +18,13 @@
   <script src="libs/jquery/dist/jquery.min.js"></script>
   <script src="libs/bootstrap/dist/js/bootstrap.min.js"></script>
 
+  <script src="libs/jspdf/jspdf.min.js"></script>
+
   <!-- ANGULAR CUSTOM -->
   <script src="js/controllers/NavbarCtrl.js"></script>
   <script src="js/controllers/MainCtrl.js"></script>
   <script src="js/controllers/BoardCtrl.js"></script>
+  <script src="js/controllers/BoardEditCtrl.js"></script>
   <script src="js/controllers/AuthCtrl.js"></script>
   <script src="js/services/UserService.js"></script>
   <script src="js/services/BoardService.js"></script>
@@ -37,8 +40,20 @@
       <div class="navbar-header">
         <a class="navbar-brand" href="/">Agile-tool</a>
       </div>
+
       <ul class="nav navbar-nav">
-        <li><a href="/board/1"><span class="glyphicon glyphicon-th-large"></span>  Board</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <span class="glyphicon glyphicon-th-large"></span> Boards <b class="caret"></b>
+          </a>
+          <ul class="dropdown-menu">
+            <li class="dropdown-header">Available boards</li>
+            <li ng-repeat="board in boards"><a href="{{'/board/' + board.id }}">{{board.name}}</a></li>
+            <li class="divider"></li>
+            <li><a href="/board/create">Create New Board</a></li>
+          </ul>
+
+        </li>
       </ul>
 
       <ul class="nav navbar-nav navbar-right">

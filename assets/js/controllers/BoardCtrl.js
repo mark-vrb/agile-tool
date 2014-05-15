@@ -18,9 +18,12 @@ angular.module('BoardCtrl', [])
       });
     };
 
-    $scope.viewStory = function (story) {
-      $scope.story = story;
-      $('#viewStoryModal').modal();
+    $scope.viewStory = function (storyId) {
+      Story.getStory(storyId, function(err, data) {
+        if (err) return;
+        $scope.story = data;
+        $('#viewStoryModal').modal();
+      });
     };
 
     $scope.viewCreateStoryModal = function (stageId) {
@@ -151,6 +154,7 @@ angular.module('BoardCtrl', [])
           function(err, data) {
             if (err) return;
             $scope.tasks.collection.push(data);
+            $scope.refreshBoard();
           });
         $scope.tasks.enteredText = null;
       } else {
@@ -181,6 +185,46 @@ angular.module('BoardCtrl', [])
         }
       }
     };
+
+    $scope.completeTaskClick = function (task) {
+      task.done = !task.done;
+      Task.updateTask(task, function(err, data) {
+        if (err) { task.done = !task.done; return; }
+        $scope.refreshBoard();
+      });
+    };
+
+    $scope.getProgress = function (story) {
+      if (story.tasks.length != 0)
+      {
+        var completed = story.tasks.filter(function (t) { return t.done; }).length;
+        return (completed / story.tasks.length * 100).toFixed(0) + '%';
+      }
+      return '0%';
+    };
+
+    $scope.printPdf = function () {
+      var pdf = new jsPDF('l', 'pt', 'a4'), 
+          source = $('#boardForPrint')[0];
+      margins = {
+        top    : 80,
+        bottom : 60,
+        left   : 40,
+        width  : 800
+      };
+      pdf.fromHTML(
+        source,
+        margins.left, // x coord
+        margins.top, // y coord
+        {'width': margins.width},
+        function (dispose) {
+          // dispose: object with X, Y of the last line add to the PDF
+          //          this allow the insertion of new lines after html
+          pdf.save('Test.pdf');
+        },
+        margins
+      );
+    }
 
     $scope.refreshBoard();
 

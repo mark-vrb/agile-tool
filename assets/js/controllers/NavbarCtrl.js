@@ -1,6 +1,8 @@
 var module = angular.module('NavbarCtrl', []);
 
-module.controller('NavbarController', function($rootScope, $scope, $location, User){
+module.controller('NavbarController', function($rootScope, $scope, $location, User, Board){
+  $scope.boards = [];
+
   $scope.isAuthenticated = function () {
     return User.getCurrent() != null;
   };
@@ -25,4 +27,12 @@ module.controller('NavbarController', function($rootScope, $scope, $location, Us
   $scope.goToAuthPage = function () {
     $location.url('/auth');
   };
+
+  $scope.getBoards = function () {
+    Board.getAllBoards(10, function (err, data) {
+      $scope.boards = data;
+    });
+  };
+
+  $scope.getBoards();
 });

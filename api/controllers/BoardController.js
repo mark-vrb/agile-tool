@@ -8,6 +8,7 @@
 module.exports = {
   expanded : function (req, res) {
     Board.findOne(req.param('id')).populate('stages').exec(function (err, data) {
+      if (err || !data) {res.serverError(err); return;}
       async.map(
         data.stages,
         function (stage, cb) {
@@ -15,6 +16,7 @@ module.exports = {
             .find({currentStage : stage.id})
             .populate('likes')
             .populate('assignedTo')
+            .populate('tasks')
             .exec(function (err, stories) {
               var transformed = JSON.parse(JSON.stringify(stage));
               transformed.stories = stories;

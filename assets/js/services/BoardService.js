@@ -1,6 +1,6 @@
 angular.module('BoardService', []).factory('Board', ['$http', function($http) {
   var
-    getBoard
+    getBoard, getAllBoards
   ;
 
   getBoard = function (id, callback) {
@@ -14,7 +14,22 @@ angular.module('BoardService', []).factory('Board', ['$http', function($http) {
       });
   };
 
+  getAllBoards = function (limit, callback) {
+    $http
+      .get('/api/board')
+      .success(function (data) {
+        if (limit)
+          callback(null, data.slice(0, limit));
+        else
+          callback(null, data);
+      })
+      .error(function (data) {
+        callback(data, null);
+      });
+  };
+
   return {
-    getBoard : getBoard,
+    getBoard     : getBoard,
+    getAllBoards : getAllBoards
   };
 }]);
