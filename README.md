@@ -17,7 +17,11 @@ Clone repository and in repository root folder execute following commands. First
 ```
 npm install
 ```
-Then bower packages.
+Install bower, if you haven't it yet.
+```
+npm install -g bower
+```
+Then install bower packages.
 ```
 bower install
 ```
