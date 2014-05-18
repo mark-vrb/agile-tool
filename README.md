@@ -7,7 +7,7 @@ Database setup
 --------------
 Install [MySQL](http://dev.mysql.com/downloads/mysql/) database server. Setup local instance. After that, execute following script for your MySQL server.
 ```
-CREATE SCHEMA `new_schema` ;
+CREATE SCHEMA `agile_tool_db` ;
 ```
 
 Application setup
