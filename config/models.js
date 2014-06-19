@@ -9,5 +9,5 @@
 module.exports.models = {
 
   // Default connection.
-  connection: 'localMysqlServer'
+  connection: 'localMongodbServer'
 };

@@ -5,8 +5,8 @@
   "description": "Agile management system",
   "keywords": [],
   "dependencies": {
-    "sails": "~0.10.0-rc7",
-    "sails-mysql": "~0.10.0-rc6",
+    "sails": "~0.10.0-rc8",
+    "sails-mongo": "~0.10.0-rc5",
     "bcrypt": "~0.7.8",
     "passport": "~0.2.0",
     "passport-local": "~1.0.0",
