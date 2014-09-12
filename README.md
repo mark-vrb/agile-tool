@@ -5,10 +5,7 @@ Agile Management System. A [Sails](http://sailsjs.org) application.
 
 Database setup
 --------------
-Install [MySQL](http://dev.mysql.com/downloads/mysql/) database server. Setup local instance. After that, execute following script for your MySQL server.
-```
-CREATE SCHEMA `agile_tool_db` ;
-```
+Download and install [MongoDB](http://www.mongodb.org/) database server. Follow instructions on MongoDB site to launch local instance.
 
 Application setup
 -----------------
@@ -25,13 +22,14 @@ Then install bower packages.
 ```
 bower install
 ```
-Go to the file config/connections.js. Find following lines, and replace user and password properties with your actual username and password for MySQL server instance.
+Go to the file config/connections.js. Find following lines, and write correct port and db name, if necessary.
 ```
-  localMysqlServer: {
-    adapter: 'sails-mysql',
+  localMongodbServer: {
+    adapter: 'sails-mongo',
     host: 'localhost',
-    user: 'root',
-    password: '1234',
+    port: 27017,
+    // user: 'username',
+    // password: 'password',
     database: 'agile_tool_db'
   },
 ```
